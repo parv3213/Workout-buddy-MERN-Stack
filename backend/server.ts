@@ -21,7 +21,7 @@ app.use('/api/workouts', workoutRoutes)
 
 // Connect to db
 if (process.env.MONGO_URI) {
-  mongoose.set('strictQuery', true)
+  mongoose.set('strictQuery', false)
   mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
