@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import { useWorkoutContext } from '../hooks/UseWorkoutContext'
+import { Workout } from '../pages/Home'
 
 const AddWorkout = () => {
+  const { dispatch } = useWorkoutContext()
+
   const [title, setTitle] = useState<string>()
   const [load, setLoad] = useState<number>()
   const [reps, setReps] = useState<number>()
@@ -24,7 +28,7 @@ const AddWorkout = () => {
         setLoad(undefined)
         setReps(undefined)
         setError(undefined)
-        alert('Added exercise')
+        dispatch({ type: 'CREATE_WORKOUT', payload: json as Workout })
       } else {
         setError(json.error)
       }

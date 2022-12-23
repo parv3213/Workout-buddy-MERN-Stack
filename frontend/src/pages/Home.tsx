@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import AddWorkout from '../components/AddWorkout'
 import WorkoutDetails from '../components/WorkoutDetails'
+import { useWorkoutContext } from '../hooks/UseWorkoutContext'
 
 export interface Workout {
   _id: string
@@ -13,16 +14,19 @@ export interface Workout {
 }
 
 const Home = () => {
-  const [workouts, setWorkouts] = useState<Workout[]>()
+  const { workouts, dispatch } = useWorkoutContext()
 
   useEffect(() => {
     const fetchWorkout = async () => {
       try {
         const response = await fetch('/api/workouts')
-        const json = await response.json()
+        const json = (await response.json()) as Workout[]
 
         if (response.ok) {
-          setWorkouts(json)
+          dispatch({
+            type: 'SET_WORKOUTS',
+            payload: json,
+          })
         }
       } catch (error) {
         console.log('Error:', error)
