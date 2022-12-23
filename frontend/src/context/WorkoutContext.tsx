@@ -7,12 +7,12 @@ interface WorkoutActionSetWorkouts {
   payload: Workout[]
 }
 
-interface WorkoutActionCreateWorkout {
-  type: 'CREATE_WORKOUT'
+interface WorkoutActionCreateDeleteWorkout {
+  type: 'CREATE_WORKOUT' | 'DELETE_WORKOUT'
   payload: Workout
 }
 
-type WorkoutAction = WorkoutActionSetWorkouts | WorkoutActionCreateWorkout
+type WorkoutAction = WorkoutActionSetWorkouts | WorkoutActionCreateDeleteWorkout
 
 interface WorkoutState {
   workouts: undefined | Workout[]
@@ -42,6 +42,10 @@ export const workoutsReducer = (state: WorkoutState, action: WorkoutAction) => {
       } else {
         return { workouts: [action.payload] }
       }
+    case 'DELETE_WORKOUT':
+      if (state.workouts) {
+        return { workouts: state.workouts.filter((workout) => workout._id !== action.payload._id) }
+      }
     default:
       return state
   }
@@ -49,7 +53,7 @@ export const workoutsReducer = (state: WorkoutState, action: WorkoutAction) => {
 
 export const WorkoutContextProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(workoutsReducer, {
-    workouts: [],
+    workouts: undefined,
   })
 
   return <WorkoutContext.Provider value={{ ...state, dispatch }}>{children}</WorkoutContext.Provider>

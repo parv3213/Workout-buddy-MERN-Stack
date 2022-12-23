@@ -42,24 +42,27 @@ const AddWorkout = () => {
       <p className="mb-2 font-bold">Add a New Workout</p>
       <label className="mt-4 text-slate-700">Exercise Title:</label>
       <input
+        required
         type="text"
         className="mt-2 h-8 rounded-md pl-3 text-slate-700 shadow-md"
         onChange={(e) => setTitle(e.target.value)}
-        value={title ? title : ''}
+        value={title !== undefined ? title : ''}
       />
       <label className="mt-4 text-slate-700">Load(kg):</label>
       <input
+        required
         type="number"
         className="mt-2 h-8 rounded-md pl-3 text-slate-700 shadow-md"
         onChange={(e) => setLoad(Number(e.target.value))}
-        value={load ? load : ''}
+        value={load !== undefined ? load : ''}
       />
       <label className="mt-4 text-slate-700">Reps:</label>
       <input
+        required
         type="number"
         className="mt-2 h-8 rounded-md pl-3 text-slate-700 shadow-md"
         onChange={(e) => setReps(Number(e.target.value))}
-        value={reps ? reps : ''}
+        value={reps !== undefined ? reps : ''}
       />
 
       <button className="mt-6 max-w-fit rounded-lg bg-green-600 px-2 py-2 text-left text-white" type="submit">
