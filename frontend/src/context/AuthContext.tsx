@@ -41,7 +41,7 @@ export const AuthContextProvider = ({ children }: any) => {
     user: null,
   })
 
-  console.log('AuthContext state', state)
+  console.log('Auth user', state)
   useEffect(() => {
     const user = localStorage.getItem('user')
 
