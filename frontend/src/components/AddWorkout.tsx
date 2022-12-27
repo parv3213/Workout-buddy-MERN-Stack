@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useWorkoutContext } from '../hooks/UseWorkoutContext'
 import { Workout } from '../pages/Home'
+import Button from './Button'
 
 const AddWorkout = () => {
   const { dispatch } = useWorkoutContext()
@@ -65,9 +66,7 @@ const AddWorkout = () => {
         value={reps !== undefined ? reps : ''}
       />
 
-      <button className="mt-6 max-w-fit rounded-lg bg-green-600 px-2 py-2 text-left text-white" type="submit">
-        Add Workout
-      </button>
+      <Button text="Add Workout" />
 
       {!error ? (
         ''
