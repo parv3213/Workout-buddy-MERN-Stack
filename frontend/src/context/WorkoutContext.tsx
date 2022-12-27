@@ -4,7 +4,7 @@ import { Workout } from '../pages/Home'
 
 interface WorkoutActionSetWorkouts {
   type: 'SET_WORKOUTS'
-  payload: Workout[]
+  payload: Workout[] | undefined
 }
 
 interface WorkoutActionCreateDeleteWorkout {

@@ -6,7 +6,8 @@ import Workout from '../models/workoutModel'
 // GET all workouts
 const getWorkouts = async (req: Request, res: Response) => {
   try {
-    const workouts = await Workout.find({}).sort({ createdAt: -1 })
+    // @ts-ignore
+    const workouts = await Workout.find({ user_id: req.user!._id }).sort({ createdAt: -1 })
     res.status(200).json(workouts)
   } catch (error) {
     res.status(400).json({ error: error })
@@ -35,11 +36,14 @@ const getWorkout = async (req: Request, res: Response) => {
 // POST a new workout
 const createWorkout = async (req: Request, res: Response) => {
   const { title, load, reps } = req.body
+
   try {
     const workout = await Workout.create({
       title,
       load,
       reps,
+      // @ts-ignore
+      user_id: req.user!._id,
     })
     res.status(200).json(workout)
   } catch (error) {
