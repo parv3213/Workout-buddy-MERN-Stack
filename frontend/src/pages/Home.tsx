@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import AddWorkout from '../components/AddWorkout'
 import WorkoutDetails from '../components/WorkoutDetails'
-import { useWorkoutContext } from '../hooks/UseWorkoutContext'
+import { useAuthContext } from '../hooks/useAuthContext'
+import { useWorkoutContext } from '../hooks/useWorkoutContext'
 
 export interface Workout {
   _id: string
@@ -15,11 +16,16 @@ export interface Workout {
 
 const Home = () => {
   const { workouts, dispatch } = useWorkoutContext()
+  const { user } = useAuthContext()
 
   useEffect(() => {
     const fetchWorkout = async () => {
       try {
-        const response = await fetch('/api/workouts')
+        const response = await fetch('/api/workouts', {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        })
         const json = (await response.json()) as Workout[]
 
         if (response.ok) {
@@ -33,8 +39,8 @@ const Home = () => {
       }
     }
 
-    fetchWorkout()
-  }, [])
+    if (user) fetchWorkout()
+  }, [user, dispatch])
 
   return (
     <div className="mt-8">

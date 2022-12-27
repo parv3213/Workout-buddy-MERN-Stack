@@ -1,15 +1,22 @@
 import React from 'react'
 import { formatDistance } from 'date-fns'
-import { useWorkoutContext } from '../hooks/UseWorkoutContext'
+import { useWorkoutContext } from '../hooks/useWorkoutContext'
 import { Workout } from '../pages/Home'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const WorkoutDetails = ({ workout }: { workout: Workout }) => {
   const { dispatch } = useWorkoutContext()
+  const { user } = useAuthContext()
 
   const handleDelete = async (id: string) => {
+    if (!user) return
+
     try {
       const res = await fetch(`/api/workouts/${id}`, {
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
       })
       const json = await res.json()
 

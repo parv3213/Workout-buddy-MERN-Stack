@@ -5,6 +5,9 @@ import User from '../models/userModel'
 
 const createToken = (_id: number) => {
   if (typeof process.env.SECRET == 'string') return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' })
+  else {
+    throw Error('Secret not found')
+  }
 }
 
 // Login user
